@@ -13,7 +13,7 @@
 		45344DC61B8529F5000E91A9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45344DC51B8529F5000E91A9 /* Images.xcassets */; };
 		45344DC91B8529F5000E91A9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45344DC71B8529F5000E91A9 /* LaunchScreen.xib */; };
 		45344DD51B8529F5000E91A9 /* DexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 45344DD41B8529F5000E91A9 /* DexTests.m */; };
-		45344DE31B8611B3000E91A9 /* SDTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45344DE21B8611B3000E91A9 /* SDTestViewController.m */; };
+		45344DE61B8674B7000E91A9 /* SDCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45344DE51B8674B7000E91A9 /* SDCaptureViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,8 +38,8 @@
 		45344DCE1B8529F5000E91A9 /* DexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		45344DD31B8529F5000E91A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45344DD41B8529F5000E91A9 /* DexTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DexTests.m; sourceTree = "<group>"; };
-		45344DE11B8611B3000E91A9 /* SDTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDTestViewController.h; path = Dex.xcodeproj/../SDTestViewController.h; sourceTree = SOURCE_ROOT; };
-		45344DE21B8611B3000E91A9 /* SDTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDTestViewController.m; path = Dex.xcodeproj/../SDTestViewController.m; sourceTree = SOURCE_ROOT; };
+		45344DE41B8674B7000E91A9 /* SDCaptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCaptureViewController.h; sourceTree = "<group>"; };
+		45344DE51B8674B7000E91A9 /* SDCaptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCaptureViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,8 +83,8 @@
 			children = (
 				45344DBC1B8529F5000E91A9 /* AppDelegate.h */,
 				45344DBD1B8529F5000E91A9 /* AppDelegate.m */,
-				45344DE11B8611B3000E91A9 /* SDTestViewController.h */,
-				45344DE21B8611B3000E91A9 /* SDTestViewController.m */,
+				45344DE41B8674B7000E91A9 /* SDCaptureViewController.h */,
+				45344DE51B8674B7000E91A9 /* SDCaptureViewController.m */,
 				45344DC21B8529F5000E91A9 /* Main.storyboard */,
 				45344DC51B8529F5000E91A9 /* Images.xcassets */,
 				45344DC71B8529F5000E91A9 /* LaunchScreen.xib */,
@@ -219,8 +219,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45344DE31B8611B3000E91A9 /* SDTestViewController.m in Sources */,
 				45344DBE1B8529F5000E91A9 /* AppDelegate.m in Sources */,
+				45344DE61B8674B7000E91A9 /* SDCaptureViewController.m in Sources */,
 				45344DBB1B8529F5000E91A9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
