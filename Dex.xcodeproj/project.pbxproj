@@ -14,6 +14,7 @@
 		45344DC91B8529F5000E91A9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45344DC71B8529F5000E91A9 /* LaunchScreen.xib */; };
 		45344DD51B8529F5000E91A9 /* DexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 45344DD41B8529F5000E91A9 /* DexTests.m */; };
 		45344DE61B8674B7000E91A9 /* SDCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45344DE51B8674B7000E91A9 /* SDCaptureViewController.m */; };
+		45344DE91B87D86D000E91A9 /* SDResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45344DE81B87D86D000E91A9 /* SDResultsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		45344DD41B8529F5000E91A9 /* DexTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DexTests.m; sourceTree = "<group>"; };
 		45344DE41B8674B7000E91A9 /* SDCaptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCaptureViewController.h; sourceTree = "<group>"; };
 		45344DE51B8674B7000E91A9 /* SDCaptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCaptureViewController.m; sourceTree = "<group>"; };
+		45344DE71B87D86C000E91A9 /* SDResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDResultsViewController.h; sourceTree = "<group>"; };
+		45344DE81B87D86D000E91A9 /* SDResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDResultsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				45344DBD1B8529F5000E91A9 /* AppDelegate.m */,
 				45344DE41B8674B7000E91A9 /* SDCaptureViewController.h */,
 				45344DE51B8674B7000E91A9 /* SDCaptureViewController.m */,
+				45344DE71B87D86C000E91A9 /* SDResultsViewController.h */,
+				45344DE81B87D86D000E91A9 /* SDResultsViewController.m */,
 				45344DC21B8529F5000E91A9 /* Main.storyboard */,
 				45344DC51B8529F5000E91A9 /* Images.xcassets */,
 				45344DC71B8529F5000E91A9 /* LaunchScreen.xib */,
@@ -219,6 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45344DE91B87D86D000E91A9 /* SDResultsViewController.m in Sources */,
 				45344DBE1B8529F5000E91A9 /* AppDelegate.m in Sources */,
 				45344DE61B8674B7000E91A9 /* SDCaptureViewController.m in Sources */,
 				45344DBB1B8529F5000E91A9 /* main.m in Sources */,

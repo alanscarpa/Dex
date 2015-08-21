@@ -33,7 +33,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "SDCaptureViewController.h"
-
+#import "SDResultsViewController.h"
 
 @interface SDCaptureViewController () <AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate>
 
@@ -46,7 +46,6 @@
 
 @implementation SDCaptureViewController
 
-static NSString *UYLSegueToTableView = @"UYLSegueToTableView";
 
 #pragma mark -
 #pragma mark === Accessors ===
@@ -163,7 +162,8 @@ static NSString *UYLSegueToTableView = @"UYLSegueToTableView";
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    if ([identifier isEqualToString:UYLSegueToTableView])
+    
+    if ([identifier isEqualToString:@"resultsSegue"])
     {
         return [self.codeObjects count];
     }
@@ -173,11 +173,12 @@ static NSString *UYLSegueToTableView = @"UYLSegueToTableView";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-//    if ([segue.identifier isEqualToString:UYLSegueToTableView])
-//    {
-//        UYLTableViewController *viewController = segue.destinationViewController;
-//        viewController.codeObjects = self.codeObjects;
-//    }
+    
+    if ([segue.identifier isEqualToString:@"resultsSegue"])
+    {
+        SDResultsViewController *viewController = segue.destinationViewController;
+        viewController.codeObjects = self.codeObjects;
+    }
 }
 
 #pragma mark -
@@ -198,6 +199,7 @@ static NSString *UYLSegueToTableView = @"UYLSegueToTableView";
     
     [self clearTargetLayer];
     [self showDetectedObjects];
+    [self performSegueWithIdentifier:@"resultsSegue" sender:self];
 }
 
 #pragma mark -

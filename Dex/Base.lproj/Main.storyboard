@@ -17,9 +17,31 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="swF-wa-JJg" kind="presentation" identifier="resultsSegue" modalTransitionStyle="crossDissolve" id="cRu-1c-Q1e"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="164" y="237"/>
+        </scene>
+        <!--Results View Controller-->
+        <scene sceneID="iNj-WN-1og">
+            <objects>
+                <viewController id="swF-wa-JJg" customClass="SDResultsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xp1-dd-0vq"/>
+                        <viewControllerLayoutGuide type="bottom" id="htp-nx-Fkp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uf0-Gw-VTm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H7i-pq-D58" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="909" y="232"/>
         </scene>
     </scenes>
 </document>
