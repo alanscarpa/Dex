@@ -41,6 +41,8 @@
 @property (nonatomic, strong) CALayer *targetLayer;
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) NSMutableArray *codeObjects;
+@property (nonatomic, strong) NSMutableArray *readableCodeObjects;
+@property (nonatomic) BOOL isDecodingScanResult;
 
 @end
 
@@ -58,6 +60,17 @@
         _codeObjects = [NSMutableArray new];
     }
     return _codeObjects;
+}
+
+
+-(NSMutableArray *)readableCodeObjects
+{
+    if (!_readableCodeObjects)
+    {
+        _readableCodeObjects = [NSMutableArray new];
+    }
+    return _readableCodeObjects;
+    
 }
 
 - (AVCaptureSession *)captureSession
@@ -120,8 +133,15 @@
 #pragma mark === View Lifecycle ===
 #pragma mark -
 
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    self.isDecodingScanResult = NO;
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
+    
+    
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidEnterBackground:)
@@ -177,7 +197,7 @@
     if ([segue.identifier isEqualToString:@"resultsSegue"])
     {
         SDResultsViewController *viewController = segue.destinationViewController;
-        viewController.codeObjects = self.codeObjects;
+        viewController.readableCodeObjects = self.readableCodeObjects;
     }
 }
 
@@ -187,19 +207,26 @@
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
 {
-    self.codeObjects = nil;
-    
-    for (AVMetadataObject *metadataObject in metadataObjects)
+    if (self.isDecodingScanResult == NO)
     {
-        AVMetadataObject *transformedObject = [self.previewLayer transformedMetadataObjectForMetadataObject:metadataObject];
-        [self.codeObjects addObject:transformedObject];
-        AVMetadataMachineReadableCodeObject *codeObject = (AVMetadataMachineReadableCodeObject *)metadataObject;
-        NSLog(@"%@", codeObject.stringValue);
+        self.isDecodingScanResult = YES;
+        self.codeObjects = nil;
+        for (AVMetadataObject *metadataObject in metadataObjects)
+        {
+            AVMetadataObject *transformedObject = [self.previewLayer transformedMetadataObjectForMetadataObject:metadataObject];
+            // MAY NOT NEED THIS ARRAY
+            [self.codeObjects addObject:transformedObject];
+            AVMetadataMachineReadableCodeObject *readableCodeObject = (AVMetadataMachineReadableCodeObject *)metadataObject;
+            // STORING IN ARRAY FOR FUTURE POSSIBILITY OF MULTIPLE QR CODES
+            [self.readableCodeObjects addObject:readableCodeObject];
+            NSLog(@"%@", readableCodeObject.stringValue);
+        }
+        
+        [self clearTargetLayer];
+        [self showDetectedObjects];
+        self.isDecodingScanResult = NO;
+        [self performSegueWithIdentifier:@"resultsSegue" sender:self];
     }
-    
-    [self clearTargetLayer];
-    [self showDetectedObjects];
-    [self performSegueWithIdentifier:@"resultsSegue" sender:self];
 }
 
 #pragma mark -

@@ -7,19 +7,38 @@
 //
 
 #import "SDResultsViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface SDResultsViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *resultsLabel;
 
 @end
 
 @implementation SDResultsViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self updateUI];
 }
 
-- (void)didReceiveMemoryWarning {
+
+-(void)updateUI
+{
+    
+    
+    for (AVMetadataMachineReadableCodeObject *readableCodeObject in self.readableCodeObjects){
+        
+        self.resultsLabel.text = readableCodeObject.stringValue;
+        
+    }
+    
+}
+
+
+
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

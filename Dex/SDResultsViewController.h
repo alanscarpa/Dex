@@ -10,6 +10,6 @@
 
 @interface SDResultsViewController : UIViewController
 
-@property (nonatomic, strong) NSArray *codeObjects;
+@property (nonatomic, strong) NSArray *readableCodeObjects;
 
 @end
