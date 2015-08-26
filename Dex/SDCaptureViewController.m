@@ -34,6 +34,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SDCaptureViewController.h"
 #import "SDResultsViewController.h"
+#import "SDTabBarControllerViewController.h"
+
 
 @interface SDCaptureViewController () <AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate>
 
@@ -141,7 +143,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     
-    
+    self.isDecodingScanResult = NO;
+
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidEnterBackground:)
@@ -196,8 +199,19 @@
     
     if ([segue.identifier isEqualToString:@"resultsSegue"])
     {
+        
         SDResultsViewController *viewController = segue.destinationViewController;
         viewController.readableCodeObjects = self.readableCodeObjects;
+        
+//        SDResultsViewController *viewController = [[SDResultsViewController alloc]init];
+//        viewController.readableCodeObjects = self.readableCodeObjects;
+//
+//        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        UINavigationController *navController = [mainStoryboard instantiateViewControllerWithIdentifier:@"navController"];
+//        SDResultsViewController *viewController = navController.viewControllers[0];
+//        viewController.readableCodeObjects = self.readableCodeObjects;
+//        viewController = segue.destinationViewController;
+        
     }
 }
 
@@ -224,9 +238,27 @@
         
         [self clearTargetLayer];
         [self showDetectedObjects];
-        self.isDecodingScanResult = NO;
         [self performSegueWithIdentifier:@"resultsSegue" sender:self];
+        //[self goToResultsView];
     }
+}
+
+
+-(void)goToResultsView
+{
+    
+    
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    UINavigationController *navController = [mainStoryboard instantiateViewControllerWithIdentifier:@"navController"];
+    SDResultsViewController *viewController = navController.viewControllers[0];
+    viewController.readableCodeObjects = self.readableCodeObjects;
+    
+    
+//    [UIView transitionFromView:self.view toView:[navController.viewControllers[0] view] duration:0.2 options:UIViewAnimationOptionTransitionCrossDissolve completion:nil];
+    [self presentViewController:navController animated:YES completion:nil];
+    //[self showViewController:navController sender:self];
+    
 }
 
 #pragma mark -

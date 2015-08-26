@@ -8,6 +8,7 @@
 
 #import "SDResultsViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "SDTabBarControllerViewController.h"
 
 @interface SDResultsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *resultsLabel;
@@ -20,6 +21,7 @@
 {
     [super viewDidLoad];
     [self updateUI];
+    
 }
 
 
@@ -34,6 +36,18 @@
     }
     
 }
+- (IBAction)cancelButtonTapped:(id)sender
+{
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+
+
+
+
+
 
 
 
