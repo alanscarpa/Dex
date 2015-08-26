@@ -1,59 +1,34 @@
 //
-//  UYLCaptureViewController.m
-//  QReader
+//  SDScanner.m
+//  Dex
 //
-// Created by Keith Harrison http://useyourloaf.com
-// Copyright (c) 2014 Keith Harrison. All rights reserved.
+//  Created by Alan Scarpa on 8/26/15.
+//  Copyright (c) 2015 Skytop Designs. All rights reserved.
 //
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are met:
-//
-// Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//
-// Redistributions in binary form must reproduce the above copyright
-// notice, this list of conditions and the following disclaimer in the
-// documentation and/or other materials provided with the distribution.
-//
-// Neither the name of Keith Harrison nor the names of its contributors
-// may be used to endorse or promote products derived from this software
-// without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER ''AS IS'' AND ANY
-// EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY
-// DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-// ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#import "SDScanner.h"
+
+@implementation SDScanner 
 
 
-#import <AVFoundation/AVFoundation.h>
-#import "SDCaptureViewController.h"
-#import "SDResultsViewController.h"
-#import "SDTabBarControllerViewController.h"
-
-
-@interface SDCaptureViewController () <AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate>
-
-@property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
-@property (nonatomic, strong) CALayer *targetLayer;
-@property (nonatomic, strong) AVCaptureSession *captureSession;
-@property (nonatomic, strong) NSMutableArray *codeObjects;
-@property (nonatomic, strong) NSMutableArray *readableCodeObjects;
-@property (nonatomic) BOOL isDecodingScanResult;
-
-@end
-
-@implementation SDCaptureViewController
-
-
-#pragma mark -
-#pragma mark === Accessors ===
-#pragma mark -
+-(instancetype)initWithViewController:(UIViewController*)vc {
+    
+    self = [super init];
+    if (self){
+        _captureViewController = vc;
+        _captureView = vc.view;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationDidEnterBackground:)
+                                                     name:UIApplicationDidEnterBackgroundNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationWillEnterForeground:)
+                                                     name:UIApplicationWillEnterForegroundNotification
+                                                   object:nil];
+    }
+    return self;
+    
+}
 
 - (NSMutableArray *)codeObjects
 {
@@ -114,12 +89,12 @@
             
             self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
             self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-            self.previewLayer.frame = self.view.bounds;
-            [self.view.layer addSublayer:self.previewLayer];
+            self.previewLayer.frame = self.captureView.bounds;
+            [self.captureView.layer addSublayer:self.previewLayer];
             
             self.targetLayer = [CALayer layer];
-            self.targetLayer.frame = self.view.bounds;
-            [self.view.layer addSublayer:self.targetLayer];
+            self.targetLayer.frame = self.captureView.bounds;
+            [self.captureView.layer addSublayer:self.targetLayer];
             
         }
         else
@@ -135,33 +110,17 @@
 #pragma mark === View Lifecycle ===
 #pragma mark -
 
--(void)viewDidLoad {
-    [super viewDidLoad];
-}
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    
-    self.isDecodingScanResult = NO;
 
-    [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidEnterBackground:)
-                                                 name:UIApplicationDidEnterBackgroundNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillEnterForeground:)
-                                                 name:UIApplicationWillEnterForegroundNotification
-                                               object:nil];
-    [self startRunning];
-}
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    
+//    self.isDecodingScanResult = NO;
+//    
+//    
+//    [self startRunning];
+//}
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self stopRunning];
-}
 
 - (void)applicationDidEnterBackground:(NSNotification *)notification
 {
@@ -176,34 +135,12 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self stopRunning];
+
 }
 
-#pragma mark -
-#pragma mark === Segue ===
-#pragma mark -
 
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
-{
-    
-    if ([identifier isEqualToString:@"resultsSegue"])
-    {
-        return [self.codeObjects count];
-    }
-    
-    return NO;
-}
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    
-    if ([segue.identifier isEqualToString:@"resultsSegue"])
-    {
-        
-        SDResultsViewController *viewController = segue.destinationViewController;
-        viewController.readableCodeObjects = self.readableCodeObjects;
-        
-    }
-}
 
 #pragma mark -
 #pragma mark === AVCaptureMetadataOutputObjectsDelegate ===
@@ -228,7 +165,7 @@
         
         [self clearTargetLayer];
         [self showDetectedObjects];
-        [self performSegueWithIdentifier:@"resultsSegue" sender:self];
+        [self.captureViewController performSegueWithIdentifier:@"resultsSegue" sender:self];
     }
 }
 
@@ -334,5 +271,6 @@ CGMutablePathRef createPathForPoints(NSArray* points)
     
     return path;
 }
+
 
 @end
