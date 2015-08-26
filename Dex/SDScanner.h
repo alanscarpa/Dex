@@ -25,6 +25,7 @@
 
 
 -(instancetype)initWithViewController:(UIViewController*)vc;
-
+- (void)startRunning;
+- (void)stopRunning;
 
 @end
